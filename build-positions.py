@@ -33,7 +33,7 @@ with open("base.tex", "r") as bfile :
         player = Player.WHITE if args.him else Player.BLACK
         def new_line() :
             #print(r"\newline")
-            print(r"\vspace{" + config.units(config.board_spacing) + "}")
+            #print(r"\vspace{" + config.units(config.board_spacing) + "}")
             print(r"\newline")
 
         n = 0
@@ -44,6 +44,6 @@ with open("base.tex", "r") as bfile :
                     if n > 0 and n % config.boards_per_row == 0 :
                         new_line()
                     print(board.draw())
-                    print(r"\hspace{" + config.units(config.board_spacing) + "}")
+                    #print(r"\hspace{" + config.units(config.board_spacing) + "}")
                     shown_boards.append(board)
                     n += 1

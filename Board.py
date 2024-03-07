@@ -157,6 +157,13 @@ class Board :
         pt_units = lambda x, y : "(" + self.config.units(x) + ", " + self.config.units(y) + ")"
         
         out = r"\begin{tikzpicture}" + endl
+        
+        # Draw border
+        tile_width = self.config.width + 2*self.config.board_spacing
+        tile_height = self.config.width + 5.5*self.config.board_spacing
+        out += r"\draw[thick] " + pt_units(-self.config.board_spacing, -3.5*self.config.board_spacing) + " rectangle ++" + pt_units(2*tile_width, tile_height) + ";" + endl
+        out += r"\draw[dotted] " + pt_units(tile_width-self.config.board_spacing, -3.5*self.config.board_spacing) + " rectangle ++" + pt_units(tile_width, tile_height) + ";" + endl
+        out += r"\draw[dotted] " + pt_units(-self.config.board_spacing, -3.5*self.config.board_spacing) + " rectangle ++" + pt_units(tile_width, 2.5*self.config.board_spacing) + ";" + endl
 
         # Draw pieces and empty squares
         for (y, x) in it.product(range(3), repeat=2) :
@@ -196,8 +203,10 @@ class Board :
                     + ", single arrow head extend=3pt, minimum height=" +
                     self.config.units(mag) + ", shift={" + pt_units(*center) +"}, rotate=" + str(math.degrees(theta)) + "] {};" + endl)
 
-        # Draw turn number
-        out += r"\draw " + pt_units(self.config.width/2, -3) + " node {Move: " + str(self.turn_num) + "};" + endl
+        # Draw turn number and other labels
+        out += r"\draw " + pt_units(self.config.width/2, self.config.width + self.config.board_spacing) + " node {Mossa: " + str(self.turn_num) + "};" + endl
+        out += r"\draw " + pt_units(1.5*self.config.width + 2*self.config.board_spacing, self.config.width + self.config.board_spacing) + " node {Scelte possibili};" + endl
+        out += r"\draw " + pt_units(self.config.width/2, -1.5*self.config.board_spacing) + " node {Mossa selezionata};" + endl
 
         out += r"\end{tikzpicture}"
         return out
