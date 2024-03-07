@@ -1,4 +1,4 @@
-from anytree import AnyNode, LevelOrderIter
+from anytree import AnyNode, LevelOrderIter, RenderTree, PreOrderIter
 from Board import Board, Player
 from Config import Config
 from typing import Dict, List
@@ -49,3 +49,7 @@ class Games :
                 else :
                     boards[board.turn_num] = [board]
         return boards
+        
+    def render_tree(self, maxlevel=None):
+        return PreOrderIter(self.root, maxlevel=maxlevel)
+

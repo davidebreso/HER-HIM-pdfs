@@ -9,7 +9,7 @@
 ODIR=output
 
 #==============================================================================
-all: board her him
+all: board her him tree
 #==============================================================================
 
 #==============================================================================
@@ -18,6 +18,7 @@ help:
 	@echo "all:		Build the manual from the LaTeX source code."
 	@echo "clean:		Remove all of the build files for the PDFs."
 	@echo "board:		Build game board PDF."
+	@echo "tree:		Build game tree PDF."
 	@echo "her:		Build the positions and moves for a HER, the black player."
 	@echo "him:		Build the positions and moves for a HIM, the white player."
 
@@ -41,6 +42,13 @@ him:
 	mkdir -p ${ODIR}
 	./build-positions.py -i > ${ODIR}/him.tex
 	cd ${ODIR}; pdflatex him.tex
+
+#==============================================================================
+tree:
+#==============================================================================
+	mkdir -p ${ODIR}
+	./build-tree.py > ${ODIR}/tree.tex
+	cd ${ODIR}; pdflatex tree.tex
 
 #==============================================================================
 clean:

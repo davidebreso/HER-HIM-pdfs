@@ -1,0 +1,25 @@
+\documentclass[a4paper,landscape]{article}
+\usepackage[margin=1cm]{geometry}
+\usepackage[LSBC4,T1]{fontenc}
+\usepackage{chessboard}
+\storechessboardstyle{3x3}{maxfield=c3,boardfontencoding=LSBC4}
+\usepackage{tikz-qtree}
+\usetikzlibrary{graphs,shadows,trees}
+
+\begin{document}
+\tikzset{
+%    edge from parent fork down,
+    every node/.style=
+    {align=center},
+}
+\noindent
+\resizebox{\textwidth}{!}{
+\begin{tikzpicture}[
+        level distance=12cm,
+        line width=2,]
+%TIKZ
+\draw (current bounding box.north east) -- (current bounding box.north west) -- (current bounding box.south west) -- (current bounding box.south east) -- cycle;
+\end{tikzpicture}
+}
+
+\end{document}

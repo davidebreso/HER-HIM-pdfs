@@ -37,6 +37,12 @@ class Pawn :
         Make hashable so they can be stored in a set.
         """
         return hash((self.player, self.x, self.y))
+        
+    def __str__(self) -> str:
+        """
+        Print position of pawn for Board.draw_chessboard method
+        """
+        return "p"+chr(ord('a')+self.x)+chr(ord('1')+self.y)
 
 @dataclass
 class Move :
@@ -209,4 +215,27 @@ class Board :
         out += r"\draw " + pt_units(self.config.width/2, -1.5*self.config.board_spacing) + " node {Mossa selezionata};" + endl
 
         out += r"\end{tikzpicture}"
+        return out
+        
+    def draw_chessboard(self) -> str:
+        out = r"{\chessboard[style=3x3,"
+        if self.turn is Player.WHITE:
+            out += "mover=w,"
+        else:
+            out += "mover=b,"
+        out+=r"addblack={"
+        pawns = ""
+        for p in sorted(self.pawns[Player.BLACK]):
+            pawns += str(p) + ","
+        out += pawns[:-1] + "},addwhite={"
+        pawns = ""
+        for p in sorted(self.pawns[Player.WHITE]):
+            pawns += str(p) + ","
+        out += pawns[:-1] + "},"
+        if self.winner() is None:
+            out += "showmover=true,]}"
+        elif self.winner() is Player.WHITE:
+            out += r"showmover=false]\kern-1.5em\WhiteKingOnWhite}"
+        elif self.winner() is Player.BLACK:
+            out += r"showmover=false]\kern-1.5em\BlackKingOnWhite}"
         return out
