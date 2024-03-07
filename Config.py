@@ -15,7 +15,7 @@ class Config :
         # Space between boards (in mm) on the page.
         self.board_spacing = 8
         # Number of boards to show per row on the page.
-        self.boards_per_row = 4
+        self.boards_per_row = 3
 
         # Calculated sizes
         self.space_size = self.width / 3

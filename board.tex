@@ -1,14 +1,19 @@
-\documentclass{article}
+\documentclass[a4paper]{article}
+\usepackage[LSBC4,T1]{fontenc}
 \usepackage{tikz}
 \usepackage{chessfss}
 \usepackage[top=2cm,left=1.5cm,right=1.5cm,bottom=2cm]{geometry}
+\usepackage{cmbright}
 \begin{document}
+\pagestyle{empty}
 \noindent
 
 % Draw 3 x 3 board
 % Size of  a single space
-\def\size{26mm}
+\def\size{36mm}
+\def\psize{30mm}
 \setboardfontsize{\size}
+\setboardfontencoding{LSBC4}
 \begin{center}
   \begin{tikzpicture}
     \newcommand\blacksquare[2]{\draw (#1 * \size  + \size/2, #2 * \size + \size/2) node {\BlackEmptySquare};}
@@ -23,6 +28,32 @@
       }
     }
   \end{tikzpicture}
+  
+  \vfill\vfill
+  
+  {\Huge \bfseries Pedoni da ritagliare}
+  
+  \bigskip
+
+	\setboardfontsize{\psize}  
+  \begin{tikzpicture}
+  	\newcommand\blackpawn[2]{\draw (#1 * \psize  + \psize/2, #2 * \psize + \psize/2) node {\BlackPawnOnWhite};}
+  	\newcommand\whitepawn[2]{\draw (#1 * \psize  + \psize/2, #2 * \psize + \psize/2) node {\WhitePawnOnWhite};}
+		\blackpawn{0}{0}
+		\blackpawn{1}{0}		
+		\blackpawn{2}{0}
+		\whitepawn{0}{1}
+		\whitepawn{1}{1}		
+		\whitepawn{2}{1}
+    \foreach \i in {0,...,2}{
+      \foreach \j in {0,...,1}{
+        \draw[thin,dotted] (\i * \psize, \j * \psize) rectangle (\i * \psize + \psize, \j * \psize + \psize);
+      }
+     }
+  \end{tikzpicture}
+  
+  \vfill
+
 \end{center}
 
 \end{document}
