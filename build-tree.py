@@ -4,10 +4,23 @@ Run with -h for usage information.
 """
 import argparse
 import numpy as np
+from anytree import util
 from Config import Config
 from Games import Games
 from Board import Player
 
+# Auxiliary function
+def check_left_siblings(node, mirror=True):
+    board = node.board
+    if mirror:
+        board = board.mirror()
+    node = util.leftsibling(node)
+    while node != None:
+        if node.board == board:
+            return True
+        node = util.leftsibling(node)
+    return False
+        
 # Parse command line arguments
 parser = argparse.ArgumentParser(description="Builds LaTeX source file for the complete position tree for hexapawn.")
 args = parser.parse_args()
@@ -28,34 +41,32 @@ with open("tree.tex", "r") as bfile :
         games = Games(config)
 
         # Now draw position tree
-        pre = "\Tree [."
+        pre = "\graph [layered layout] {"
         post = ""
         level = 1
         shown_boards = []
+        max_level = 20
         for node in games.render_tree(maxlevel=None):
             board = node.board
-            if board in shown_boards:
-                parent = node.parent.board
-                if parent in shown_boards:
-                    edges.append((shown_boards.index(parent), shown_boards.index(board)))
+            if board.turn_num > max_level:
                 continue
-            elif board.mirror() in shown_boards:
-                parent = node.parent.board
-                if parent in shown_boards:
-                    edges.append((shown_boards.index(parent), shown_boards.index(board.mirror())))
+            if check_left_siblings(node):
+                max_level = board.turn_num
                 continue
             c = len(shown_boards)
+            nodetext = "n"+str(c)+" [as="+board.draw_chessboard()+"]"
             shown_boards.append(board)
             if board.turn_num > level:
                 level = board.turn_num
-                pre = "\n [."
+                pre = "\n -> {"
                 post = ""
             elif board.turn_num < level:
-                pre = (level - board.turn_num)*" ]"+ " ]\n [."
+                pre = (level - board.turn_num)*" }"+ ", \n "
                 post = ""            
                 level = board.turn_num
+                max_level = 20
             elif level > 1:
-                pre = " ]\n  [."
+                pre = ",\n"
                 post = ""
             #pre = pre.strip()
             #if pre == "|":
@@ -64,11 +75,11 @@ with open("tree.tex", "r") as bfile :
             #elif pre == "+":
             #    pre = "child {"
             #    post = "}"
-            print(pre, r"\node(n", c, ")", board.draw_chessboard(), ";", post, end="", sep="")
+            print(pre, nodetext, post, end="", sep="")
 
-        print((level)*" ]")
+        print((level)*" }", ";")
         # Draw cross-edges
-        for (u, v) in edges:
-            print(r"\draw[thin] (n", u, ".south) -- (n", v, ".north);", sep="")
+        #for (u, v) in edges:
+        #    print(r"\draw[thin] (n", u, ".south) -- (n", v, ".north);", sep="")
 
     
