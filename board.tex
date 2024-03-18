@@ -1,17 +1,21 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper, landscape]{article}
 \usepackage[LSBC4,T1]{fontenc}
 \usepackage{tikz}
+\usetikzlibrary{fit, shapes.arrows}
 \usepackage{chessfss}
-\usepackage[top=2cm,left=1.5cm,right=1.5cm,bottom=2cm]{geometry}
+\usepackage[top=2cm,left=2cm,right=2cm,bottom=2cm]{geometry}
 \usepackage{cmbright}
 \begin{document}
 \pagestyle{empty}
 \noindent
 
+\def\psize{30mm}
+\def\msize{25mm}
+
+\begin{minipage}{0.5\textwidth}
 % Draw 3 x 3 board
 % Size of  a single space
 \def\size{36mm}
-\def\psize{30mm}
 \setboardfontsize{\size}
 \setboardfontencoding{LSBC4}
 \begin{center}
@@ -28,8 +32,30 @@
       }
     }
   \end{tikzpicture}
+\end{center}
+\end{minipage}
+%
+\begin{minipage}{0.5\textwidth}
   
-  \vfill\vfill
+\begin{center}  
+  {\Huge \bfseries Colori delle mosse}
+  
+  \bigskip
+  
+  \begin{tikzpicture}
+  \node[single arrow, draw=black, fill=red, inner sep=1mm, single arrow head extend=12pt, minimum height=0.75 * \msize, rotate=270.0] at (0.5 * \msize, 1.5 * \psize) {};
+    \node[single arrow, draw=black, fill=green!50!black, inner sep=1mm, single arrow head extend=12pt, minimum height=0.75 * \msize, rotate=270.0] at (1.5 * \msize, 1.5 * \psize) {};
+  \node[single arrow, draw=black, fill=yellow, inner sep=1mm, single arrow head extend=12pt, minimum height=0.75 * \msize, rotate=270.0] at (2.5 * \msize, 1.5 * \psize) {};
+  \node[single arrow, draw=black, fill=blue, inner sep=1mm, single arrow head extend=12pt, minimum height=0.75 * \msize, rotate=270.0] at (3.5 * \msize, 1.5 * \psize) {};      
+    \foreach \i in {0,...,3}{
+      \foreach \j in {0,...,1}{
+        \draw[thick] (\i * \msize, \j * \psize) rectangle (\i * \msize + \msize, \j * \psize + \psize);
+      }
+     }
+  
+  \end{tikzpicture}
+  
+  \vspace{1.5cm}
   
   {\Huge \bfseries Pedoni da ritagliare}
   
@@ -52,8 +78,8 @@
      }
   \end{tikzpicture}
   
-  \vfill
-
 \end{center}
+
+\end{minipage}
 
 \end{document}

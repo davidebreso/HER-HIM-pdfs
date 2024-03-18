@@ -41,7 +41,7 @@ with open("tree.tex", "r") as bfile :
         games = Games(config)
 
         # Now draw position tree
-        pre = "\graph [layered layout] {"
+        pre = r"\graph [layered layout] {"
         post = ""
         level = 1
         shown_boards = []
