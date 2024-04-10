@@ -49,6 +49,7 @@ tree:
 	mkdir -p ${ODIR}
 	./build-tree.py > ${ODIR}/tree.tex
 	cd ${ODIR}; lualatex tree.tex
+	plakativ --pagesize A3 --output=${ODIR}/tree_poster.pdf --maxpages 4 ${ODIR}/tree.pdf
 
 #==============================================================================
 clean:
